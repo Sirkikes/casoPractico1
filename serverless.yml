@@ -1,5 +1,8 @@
+org: sirkikes
 app: todo-list-serverless
 service: api-rest
+environment:
+  SERVERLESS_ACCESS_KEY: AK7DANWLnVdFUp3DSE1Q5Pond4bDQCgZTC8RxvQhG8OtO
 
 frameworkVersion: ">=1.1.0"
 
