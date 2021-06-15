@@ -1,5 +1,8 @@
+org: sirkikes
 app: todo-list-serverless
 service: api-rest
+environment:
+  SERVERLESS_ACCESS_KEY: AK7DANWLnVdFUp3DSE1Q5Pond4bDQCgZTC8RxvQhG8OtO
 
 frameworkVersion: ">=1.1.0"
 
@@ -18,6 +21,11 @@ provider:
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
       Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}"
+    - Effect: Allow
+      Action:
+        - translate:TranslateText
+        - comprehend:DetectDominantLanguage
+      Resource: "*"
 
 functions:
   create:
@@ -58,6 +66,14 @@ functions:
       - http:
           path: todos/{id}
           method: delete
+          cors: true
+          
+  translate:
+    handler: todos/getTranslate.translate
+    events:
+      - http:
+          path: todos/{id}/{lang}
+          method: get
           cors: true
 
 resources:
